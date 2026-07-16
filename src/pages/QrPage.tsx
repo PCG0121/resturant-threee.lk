@@ -8,7 +8,7 @@ const fallbackSiteUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
 const siteUrl = import.meta.env.VITE_SITE_URL || fallbackSiteUrl;
 
 export default function QrPage() {
-  const menuUrl = `${siteUrl.replace(/\/$/, "")}/menu`;
+  const menuUrl = `${siteUrl.replace(/\/$/, "")}/#/menu`;
 
   return (
     <>
