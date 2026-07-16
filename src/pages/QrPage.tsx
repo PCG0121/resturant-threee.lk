@@ -4,7 +4,8 @@ import Header from "../components/Header";
 import Seo from "../components/Seo";
 import { contactInfo } from "../data/menu";
 
-const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin;
+const fallbackSiteUrl = `${window.location.origin}${import.meta.env.BASE_URL}`;
+const siteUrl = import.meta.env.VITE_SITE_URL || fallbackSiteUrl;
 
 export default function QrPage() {
   const menuUrl = `${siteUrl.replace(/\/$/, "")}/menu`;
