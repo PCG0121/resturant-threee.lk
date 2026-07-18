@@ -9,6 +9,7 @@ type FoodCardProps = {
 
 export default function FoodCard({ item, onSelect }: FoodCardProps) {
   const category = categories.find((entry) => entry.id === item.category);
+  const priceLabel = item.variants?.length ? `From ${formatPrice(item.price)}` : formatPrice(item.price);
 
   return (
     <button
@@ -60,7 +61,10 @@ export default function FoodCard({ item, onSelect }: FoodCardProps) {
         </div>
 
         <div className="flex items-center justify-between gap-3">
-          <span className="text-lg font-black text-white">{formatPrice(item.price)}</span>
+          <div>
+            <span className="text-lg font-black text-white">{priceLabel}</span>
+            {item.variants?.length ? <p className="mt-0.5 text-xs font-semibold text-stone-400">{item.variants.length} price options</p> : null}
+          </div>
           <span className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-stone-300 transition group-hover:border-orange-300/50 group-hover:text-white">
             View
           </span>

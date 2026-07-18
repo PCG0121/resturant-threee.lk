@@ -33,7 +33,19 @@ export default function MenuPage() {
     const normalizedSearch = search.trim().toLowerCase();
 
     return menuItems.filter((item) => {
-      const matchesSearch = item.name.toLowerCase().includes(normalizedSearch);
+      const category = categories.find((entry) => entry.id === item.category);
+      const searchableText = [
+        item.name,
+        item.description,
+        item.fullDescription,
+        category?.name,
+        ...item.ingredients,
+        ...(item.variants?.map((variant) => variant.name) ?? []),
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      const matchesSearch = searchableText.includes(normalizedSearch);
       const matchesCategory = selectedCategory === "all" || item.category === selectedCategory;
       const matchesVegetarian = !filters.vegetarian || item.vegetarian;
       const matchesSpicy = !filters.spicy || item.spicyLevel > 0;
@@ -55,7 +67,7 @@ export default function MenuPage() {
     <>
       <Seo
         title="Menu | Restaurant Three - Kurunegala"
-        description="Search and filter the Restaurant Three QR menu with Sri Lankan, Chinese, Italian, kottu, fried rice, pizza, pasta, desserts and beverages."
+        description="Search and filter the Restaurant Three QR menu with specials, fried rice, kottu, noodles, seafood, salads, desserts and fresh juices."
       />
       <Header />
       <main className="pb-24">
@@ -65,7 +77,7 @@ export default function MenuPage() {
               <p className="text-sm font-bold uppercase tracking-[0.22em] text-gold">QR Menu</p>
               <h1 className="mt-2 text-4xl font-black text-white sm:text-5xl">Restaurant Three Menu</h1>
               <p className="mt-3 max-w-2xl leading-7 text-stone-300">
-                Browse Chinese, Italian and Sri Lankan favourites, then tap any dish to enquire by WhatsApp or phone.
+                Browse specials, fried rice, kottu, noodles, seafood, soups, desserts and juices, then tap any item to enquire by WhatsApp or phone.
               </p>
             </div>
 

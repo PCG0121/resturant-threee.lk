@@ -15,6 +15,7 @@ export default function FoodDetailsModal({ item, onClose }: FoodDetailsModalProp
 
   const category = categories.find((entry) => entry.id === item.category);
   const spiceText = item.spicyLevel === 0 ? "Mild" : `${item.spicyLevel}/3`;
+  const priceText = item.variants?.length ? `From ${formatPrice(item.price)}` : formatPrice(item.price);
 
   return (
     <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/72 p-3 backdrop-blur-sm sm:items-center">
@@ -38,7 +39,7 @@ export default function FoodDetailsModal({ item, onClose }: FoodDetailsModalProp
               <h2 className="mt-2 text-3xl font-black text-white">{item.name}</h2>
               <p className="mt-3 max-w-2xl leading-7 text-stone-300">{item.fullDescription}</p>
             </div>
-            <span className="shrink-0 text-2xl font-black text-white">{formatPrice(item.price)}</span>
+            <span className="shrink-0 text-2xl font-black text-white">{priceText}</span>
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
@@ -65,8 +66,25 @@ export default function FoodDetailsModal({ item, onClose }: FoodDetailsModalProp
             </div>
           </div>
 
+          {item.variants?.length ? (
+            <div>
+              <h3 className="text-sm font-black uppercase tracking-[0.18em] text-stone-400">Prices</h3>
+              <div className="mt-3 grid gap-2 sm:grid-cols-2">
+                {item.variants.map((variant) => (
+                  <div
+                    key={`${variant.name}-${variant.price}`}
+                    className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3"
+                  >
+                    <span className="text-sm font-bold text-stone-200">{variant.name}</span>
+                    <span className="font-black text-white">{formatPrice(variant.price)}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : null}
+
           <div>
-            <h3 className="text-sm font-black uppercase tracking-[0.18em] text-stone-400">Ingredients</h3>
+            <h3 className="text-sm font-black uppercase tracking-[0.18em] text-stone-400">Details</h3>
             <div className="mt-3 flex flex-wrap gap-2">
               {item.ingredients.map((ingredient) => (
                 <span

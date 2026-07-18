@@ -17,8 +17,8 @@ export default function HomePage() {
   return (
     <>
       <Seo
-        title="Restaurant Three - Kurunegala | Chinese, Italian & Sri Lankan Cuisine"
-        description="Explore Restaurant Three - Kurunegala's premium QR menu with Sri Lankan, Chinese and Italian favourites, daily offers and contact details."
+        title="Restaurant Three - Kurunegala | Fried Rice, Kottu & Seafood"
+        description="Explore Restaurant Three - Kurunegala's QR menu with specials, fried rice, kottu, noodles, seafood, desserts, juices and contact details."
       />
       <Header />
       <main>
@@ -35,7 +35,7 @@ export default function HomePage() {
                 Restaurant Three - Kurunegala
               </h1>
               <p className="mt-5 max-w-xl text-xl font-semibold leading-8 text-stone-200">
-                Chinese, Italian & Sri Lankan Cuisine
+                Fried Rice, Kottu, Seafood & Fresh Juice
               </p>
               <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                 <Link
@@ -59,14 +59,14 @@ export default function HomePage() {
                     <Sparkles className="h-5 w-5 text-gold" aria-hidden="true" />
                     <p className="font-black text-white">Today's Special</p>
                   </div>
-                  <p className="mt-2 text-sm text-stone-300">Chef's pick seafood, kottu and pizza specials.</p>
+                  <p className="mt-2 text-sm text-stone-300">Mixed grill, cheese sambal and 3 Special sharing meals.</p>
                 </div>
                 <div className="rounded-[1.25rem] border border-gold/25 bg-gradient-to-br from-yellow-500/14 to-orange-900/30 p-4">
                   <div className="flex items-center gap-3">
                     <Clock3 className="h-5 w-5 text-gold" aria-hidden="true" />
-                    <p className="font-black text-white">Happy Hour</p>
+                    <p className="font-black text-white">Big Bites</p>
                   </div>
-                  <p className="mt-2 text-sm text-stone-300">Selected drinks and short eats from 3 PM.</p>
+                  <p className="mt-2 text-sm text-stone-300">Crispy chicken and seafood favourites for sharing.</p>
                 </div>
               </div>
             </div>
