@@ -63,21 +63,21 @@ VITE_SITE_URL=https://your-real-website-url.com
 
 3. Restart the dev server.
 
-## Cloudflare Pages deployment
+## Vercel deployment
 
-Use these Cloudflare Pages settings:
+Use these Vercel settings:
 
 - Framework preset: `Vite`
 - Build command: `npm run build`
 - Output directory: `dist`
-- Environment variable: `VITE_SITE_URL=https://your-cloudflare-pages-url.pages.dev`
+- Environment variable: `VITE_SITE_URL=https://your-vercel-deployed-url.vercel.app`
 
 Basic steps:
 
 1. Push this project to a GitHub repository.
-2. In Cloudflare, go to Workers & Pages.
-3. Create a new Pages project.
-4. Connect the GitHub repository.
+2. In Vercel, create a new Project.
+3. Import the GitHub repository.
+4. Set the framework preset to `Vite`.
 5. Set the build command to `npm run build`.
 6. Set the output directory to `dist`.
 7. Add the `VITE_SITE_URL` environment variable.
