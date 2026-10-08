@@ -1,4 +1,4 @@
-import { Flame, Leaf, Sparkles } from "lucide-react";
+import { ArrowUpRight, Flame, Leaf, Sparkles } from "lucide-react";
 import { categories, formatPrice, type MenuItem } from "../data/menu";
 import FoodImage from "./FoodImage";
 
@@ -15,7 +15,7 @@ export default function FoodCard({ item, onSelect }: FoodCardProps) {
     <button
       type="button"
       onClick={() => onSelect(item)}
-      className="group relative overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.055] text-left shadow-soft transition duration-300 hover:-translate-y-1 hover:border-orange-400/40 hover:bg-white/[0.08] focus:outline-none focus:ring-2 focus:ring-ember"
+      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-charcoal text-left transition duration-300 hover:-translate-y-1 hover:border-gold/50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold"
     >
       {!item.available ? (
         <div className="absolute inset-0 z-20 grid place-items-center bg-black/62 backdrop-blur-[2px]">
@@ -25,9 +25,9 @@ export default function FoodCard({ item, onSelect }: FoodCardProps) {
         </div>
       ) : null}
 
-      <FoodImage src={item.image} alt={item.name} className="h-48 rounded-t-[1.75rem] sm:h-56" />
+      <FoodImage src={item.image} alt={item.name} className="aspect-[4/3] w-full" />
 
-      <div className="space-y-4 p-4">
+      <div className="flex flex-1 flex-col gap-4 p-5">
         <div className="flex flex-wrap gap-2">
           {item.popular ? (
             <span className="inline-flex items-center gap-1 rounded-full bg-ember px-2.5 py-1 text-[11px] font-black uppercase text-white">
@@ -56,17 +56,17 @@ export default function FoodCard({ item, onSelect }: FoodCardProps) {
 
         <div>
           <p className="text-xs font-bold uppercase tracking-[0.16em] text-gold">{category?.name}</p>
-          <h3 className="mt-1 text-xl font-black text-white">{item.name}</h3>
+          <h3 className="mt-1 font-display text-2xl leading-tight text-white">{item.name}</h3>
           <p className="mt-2 line-clamp-2 text-sm leading-6 text-stone-300">{item.description}</p>
         </div>
 
-        <div className="flex items-center justify-between gap-3">
+        <div className="mt-auto flex items-center justify-between gap-3 border-t border-white/10 pt-4">
           <div>
             <span className="text-lg font-black text-white">{priceLabel}</span>
             {item.variants?.length ? <p className="mt-0.5 text-xs font-semibold text-stone-400">{item.variants.length} price options</p> : null}
           </div>
-          <span className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold text-stone-300 transition group-hover:border-orange-300/50 group-hover:text-white">
-            View
+          <span className="flex h-9 w-9 items-center justify-center rounded-full border border-white/20 text-gold transition group-hover:bg-gold group-hover:text-coal" aria-label="View details">
+            <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
           </span>
         </div>
       </div>

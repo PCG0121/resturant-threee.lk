@@ -1,5 +1,6 @@
 import { useMemo, useState, type ReactNode } from "react";
 import { Flame, Leaf, MessageCircle, Phone, Search, Sparkles, Utensils } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
 import ContactSection from "../components/ContactSection";
 import FoodCard from "../components/FoodCard";
 import FoodDetailsModal from "../components/FoodDetailsModal";
@@ -24,8 +25,14 @@ const defaultFilters: Filters = {
 };
 
 export default function MenuPage() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<CategoryId | "all">("all");
+  const selectedCategory = categories.some((category) => category.id === searchParams.get("category"))
+    ? searchParams.get("category") as CategoryId
+    : "all";
+  const selectCategory = (category: CategoryId | "all") => {
+    setSearchParams(category === "all" ? {} : { category });
+  };
   const [filters, setFilters] = useState(defaultFilters);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
 
@@ -71,22 +78,23 @@ export default function MenuPage() {
       />
       <Header />
       <main className="pb-24">
-        <section className="px-4 py-8 sm:px-6 lg:px-8">
+        <section className="border-b border-white/10 bg-[#191715] px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <div className="mx-auto max-w-7xl">
             <div className="mb-6">
-              <p className="text-sm font-bold uppercase tracking-[0.22em] text-gold">QR Menu</p>
-              <h1 className="mt-2 text-4xl font-black text-white sm:text-5xl">Restaurant Three Menu</h1>
+              <p className="eyebrow">Explore the menu</p>
+              <h1 className="section-title mt-4">Find your favourite.</h1>
               <p className="mt-3 max-w-2xl leading-7 text-stone-300">
                 Browse specials, fried rice, kottu, noodles, seafood, soups, desserts and juices, then tap any item to enquire by WhatsApp or phone.
               </p>
             </div>
 
-            <div className="sticky top-[73px] z-30 -mx-4 border-y border-white/10 bg-coal/92 px-4 py-4 backdrop-blur-xl sm:mx-0 sm:rounded-[1.5rem] sm:border">
+            <div className="rounded-2xl border border-white/10 bg-coal p-4 sm:p-6">
               <div className="relative">
                 <Search className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-stone-400" aria-hidden="true" />
                 <input
                   value={search}
                   onChange={(event) => setSearch(event.target.value)}
+                  aria-label="Search menu"
                   placeholder="Search by food name"
                   className="w-full rounded-2xl border border-white/10 bg-white/[0.06] py-4 pl-12 pr-4 text-white outline-none transition placeholder:text-stone-500 focus:border-orange-300/60"
                 />
@@ -95,9 +103,10 @@ export default function MenuPage() {
               <div className="mt-4 flex gap-2 overflow-x-auto pb-1">
                 <button
                   type="button"
-                  onClick={() => setSelectedCategory("all")}
+                  onClick={() => selectCategory("all")}
+                  aria-pressed={selectedCategory === "all"}
                   className={`shrink-0 rounded-full px-4 py-2 text-sm font-black transition ${
-                    selectedCategory === "all" ? "bg-ember text-white" : "border border-white/10 bg-white/[0.04] text-stone-300"
+                    selectedCategory === "all" ? "bg-gold text-coal" : "border border-white/10 bg-white/[0.04] text-stone-300 hover:text-white"
                   }`}
                 >
                   All
@@ -106,9 +115,10 @@ export default function MenuPage() {
                   <button
                     key={category.id}
                     type="button"
-                    onClick={() => setSelectedCategory(category.id)}
+                    onClick={() => selectCategory(category.id)}
+                    aria-pressed={selectedCategory === category.id}
                     className={`shrink-0 rounded-full px-4 py-2 text-sm font-black transition ${
-                      selectedCategory === category.id ? "bg-ember text-white" : "border border-white/10 bg-white/[0.04] text-stone-300"
+                      selectedCategory === category.id ? "bg-gold text-coal" : "border border-white/10 bg-white/[0.04] text-stone-300 hover:text-white"
                     }`}
                   >
                     {category.name}
@@ -128,7 +138,7 @@ export default function MenuPage() {
 
         <MenuGroup title="Featured dishes" items={featuredItems} onSelect={setSelectedItem} emptyText="No featured dishes match these filters." />
         <MenuGroup title="Best sellers" items={bestSellers} onSelect={setSelectedItem} emptyText="No best sellers match these filters." />
-        <MenuGroup title="Full menu" items={filteredItems} onSelect={setSelectedItem} emptyText="No menu items match your search. Try clearing one filter." />
+        <MenuGroup title="The full menu" items={filteredItems} onSelect={setSelectedItem} emptyText="No menu items match your search. Try clearing one filter." />
 
         <OffersSection />
         <ContactSection />
@@ -170,8 +180,9 @@ function FilterButton({ active, onClick, icon, label }: FilterButtonProps) {
     <button
       type="button"
       onClick={onClick}
+      aria-pressed={active}
       className={`inline-flex items-center gap-2 rounded-full px-3 py-2 text-sm font-bold transition ${
-        active ? "bg-gold text-stone-950" : "border border-white/10 bg-white/[0.04] text-stone-300 hover:text-white"
+        active ? "bg-gold text-coal" : "border border-white/10 bg-white/[0.04] text-stone-300 hover:text-white"
       }`}
     >
       {icon}
@@ -192,7 +203,7 @@ function MenuGroup({ title, items, onSelect, emptyText }: MenuGroupProps) {
     <section className="px-4 py-8 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="mb-5 flex items-end justify-between gap-4">
-          <h2 className="text-2xl font-black text-white sm:text-3xl">{title}</h2>
+          <h2 className="font-display text-3xl text-white sm:text-4xl">{title}</h2>
           <span className="rounded-full border border-white/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.16em] text-stone-400">
             {items.length} items
           </span>

@@ -4,22 +4,22 @@ import { phoneLink, whatsappLink } from "../utils/links";
 
 export default function ContactSection() {
   return (
-    <section className="px-4 py-14 sm:px-6 lg:px-8">
-      <div className="mx-auto grid max-w-7xl gap-8 rounded-[2rem] border border-white/10 bg-white/[0.055] p-5 shadow-soft sm:p-8 lg:grid-cols-[1.1fr_0.9fr]">
+    <section className="section-wrap py-16 lg:py-24">
+      <div className="grid gap-8 rounded-[2rem] border border-white/10 bg-charcoal p-6 sm:p-10 lg:grid-cols-[1.1fr_0.9fr] lg:p-14">
         <div>
-          <p className="text-sm font-bold uppercase tracking-[0.22em] text-gold">Contact</p>
-          <h2 className="mt-2 text-3xl font-black text-white sm:text-4xl">Visit us in Kurunegala</h2>
+          <p className="eyebrow">Come say hello</p>
+          <h2 className="section-title mt-4">The table is waiting.</h2>
           <p className="mt-4 max-w-2xl leading-7 text-stone-300">
             Call ahead, message us on WhatsApp, open directions or find us on PickMe Food for selected delivery offers.
           </p>
 
           <div className="mt-7 grid gap-3 sm:grid-cols-2">
-            <a className="inline-flex items-center justify-center gap-2 rounded-2xl bg-ember px-5 py-4 font-black text-white transition hover:bg-orange-500" href={phoneLink()}>
+            <a className="inline-flex items-center justify-center gap-2 rounded-xl bg-gold px-5 py-4 font-bold text-coal transition hover:bg-yellow-200" href={phoneLink()}>
               <Phone className="h-5 w-5" aria-hidden="true" />
               {contactInfo.phone}
             </a>
             <a
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-5 py-4 font-black text-white transition hover:bg-emerald-400"
+              className="inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-5 py-4 font-bold text-white transition hover:bg-emerald-500"
               href={whatsappLink("Hi Restaurant Three, I would like to view your menu.")}
               target="_blank"
               rel="noreferrer"
@@ -58,7 +58,7 @@ export default function ContactSection() {
         </div>
 
         <div className="rounded-[1.5rem] border border-gold/20 bg-coal/60 p-5">
-          <h3 className="text-xl font-black text-white">Opening hours</h3>
+          <h3 className="font-display text-2xl text-white">Opening hours</h3>
           <div className="mt-4 space-y-3">
             {contactInfo.openingHours.map((line) => (
               <p key={line} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm text-stone-200">
@@ -66,9 +66,9 @@ export default function ContactSection() {
               </p>
             ))}
           </div>
-          <div className="mt-5 rounded-2xl bg-gradient-to-br from-orange-500 to-red-700 p-5">
-            <p className="text-sm font-bold uppercase tracking-[0.18em] text-orange-100">Location</p>
-            <p className="mt-2 text-2xl font-black text-white">{contactInfo.location}</p>
+          <div className="mt-5 rounded-2xl border border-gold/20 bg-gold/10 p-5">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-gold">Location</p>
+            <p className="mt-2 font-display text-3xl text-white">{contactInfo.location}</p>
           </div>
         </div>
       </div>

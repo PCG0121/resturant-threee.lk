@@ -5,9 +5,10 @@ type FoodImageProps = {
   src: string;
   alt: string;
   className?: string;
+  eager?: boolean;
 };
 
-export default function FoodImage({ src, alt, className = "" }: FoodImageProps) {
+export default function FoodImage({ src, alt, className = "", eager = false }: FoodImageProps) {
   const [loaded, setLoaded] = useState(false);
   const [failed, setFailed] = useState(false);
 
@@ -25,7 +26,8 @@ export default function FoodImage({ src, alt, className = "" }: FoodImageProps) 
         <img
           src={src}
           alt={alt}
-          loading="lazy"
+          loading={eager ? "eager" : "lazy"}
+          fetchPriority={eager ? "high" : undefined}
           onLoad={() => setLoaded(true)}
           onError={() => setFailed(true)}
           className={`h-full w-full object-cover transition duration-700 ${loaded ? "scale-100 opacity-100" : "scale-105 opacity-0"}`}
