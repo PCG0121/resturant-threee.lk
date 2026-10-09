@@ -1,4 +1,4 @@
-import { ArrowRight, ArrowUpRight, Clock3, MapPin, Sparkles } from "lucide-react";
+import { ArrowRight, ArrowUpRight, MapPin, Sparkles } from "lucide-react";
 import { Link } from "react-router-dom";
 import ContactSection from "../components/ContactSection";
 import FoodCard from "../components/FoodCard";
@@ -24,29 +24,29 @@ export default function HomePage() {
       />
       <Header />
       <main>
-        <section className="relative overflow-hidden border-b border-white/10 px-4 pb-14 pt-9 sm:px-6 lg:px-8 lg:pb-24 lg:pt-16">
+        <section className="hero-section relative overflow-hidden border-b border-white/10 px-4 pb-16 pt-12 sm:px-6 lg:px-8 lg:pb-28 lg:pt-20">
           <div className="pointer-events-none absolute -right-36 -top-44 h-[36rem] w-[36rem] rounded-full bg-ember/10 blur-[110px]" />
-          <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-16">
+          <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
             <div className="animate-fade-up">
-              <p className="eyebrow"><span className="h-2 w-2 rounded-full bg-ember" /> A little something for every craving</p>
-              <h1 className="display-title mt-7 max-w-3xl text-[clamp(3.7rem,7vw,7.5rem)] leading-[0.94] text-white">
-                Good food.<br /><em className="text-gold">Great moments.</em>
+              <p className="eyebrow"><span className="h-2 w-2 rounded-full bg-ember" /> Kurunegala · Sri Lanka</p>
+              <h1 className="display-title mt-8 max-w-3xl text-[clamp(3.6rem,7vw,7.5rem)] leading-[0.98] text-white">
+                Come hungry.<br /><em className="text-gold">Leave happy.</em>
               </h1>
               <p className="mt-7 max-w-lg text-lg leading-8 text-stone-300 sm:text-xl">
-                From wok-fired favourites to the last sip of fresh juice. Find your next favourite at Restaurant Three, Kurunegala.
+                Wok-fired favourites, comforting kottu and something fresh to sip. Pull up a chair and find your next favourite at Three.
               </p>
               <div className="mt-9 flex flex-wrap gap-3">
                 <Link to="/menu" className="btn-primary">Explore the menu <ArrowUpRight className="h-5 w-5" aria-hidden="true" /></Link>
                 <Link to="/qr" className="btn-outline">Get the QR code <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
               </div>
               <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/10 pt-6 text-sm text-stone-400">
-                <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold" aria-hidden="true" /> Kurunegala, Sri Lanka</span>
-                <span className="flex items-center gap-2"><Clock3 className="h-4 w-4 text-gold" aria-hidden="true" /> Made fresh, served with love</span>
+                <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold" aria-hidden="true" /> Find us in Kurunegala</span>
+                <span className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-gold" aria-hidden="true" /> Freshly made, best shared</span>
               </div>
             </div>
 
-            <div className="relative mx-auto w-full max-w-[640px] pb-7 pl-5 sm:pl-10 lg:pb-10">
-              <div className="absolute bottom-0 left-0 top-10 w-[88%] rounded-[2rem] border border-gold/30" aria-hidden="true" />
+            <div className="hero-visual relative mx-auto w-full max-w-[640px] pb-7 pl-5 sm:pl-10 lg:pb-10">
+              <div className="absolute bottom-0 left-0 top-10 w-[88%] rounded-[2rem] border border-gold/40" aria-hidden="true" />
               <FoodImage
                 src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?auto=format&fit=crop&w=1200&q=82"
                 alt="A freshly prepared restaurant meal"
@@ -55,8 +55,8 @@ export default function HomePage() {
               />
               <div className="absolute bottom-0 left-0 max-w-[235px] rounded-2xl border border-white/15 bg-charcoal/95 p-5 shadow-soft backdrop-blur-xl sm:left-3 sm:max-w-[260px]">
                 <Sparkles className="mb-3 h-5 w-5 text-gold" aria-hidden="true" />
-                <p className="font-display text-2xl text-white">Made to share.</p>
-                <p className="mt-1 text-sm leading-5 text-stone-400">Great meals are better together.</p>
+                <p className="font-display text-2xl text-white">Good things, together.</p>
+                <p className="mt-1 text-sm leading-5 text-stone-400">Your table is waiting at Three.</p>
               </div>
             </div>
           </div>
