@@ -1,33 +1,18 @@
-import { BadgePercent, Gift, GlassWater, Sparkles } from "lucide-react";
 import { offers } from "../data/menu";
-
-const icons = [GlassWater, BadgePercent, Gift, Sparkles];
 
 export default function OffersSection() {
   return (
-    <section className="border-y border-white/10 bg-[#191715] py-16 lg:py-20">
+    <section className="border-y border-white/10 bg-[#1b1815] py-12 lg:py-20">
       <div className="section-wrap">
-        <div className="mb-8">
-          <p className="eyebrow">More to enjoy</p>
-          <h2 className="section-title mt-4">Made for sharing.</h2>
-        </div>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {offers.map((offer, index) => {
-            const Icon = icons[index] ?? Sparkles;
-            return (
-              <article
-                key={offer.title}
-                className="rounded-2xl border border-white/10 bg-coal p-6 transition hover:-translate-y-1 hover:border-gold/40"
-              >
-                <div className="mb-6 grid h-12 w-12 place-items-center rounded-full bg-gold/10 text-gold">
-                  <Icon className="h-6 w-6" aria-hidden="true" />
-                </div>
-                <h3 className="font-display text-2xl text-white">{offer.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-stone-300">{offer.description}</p>
-                <p className="mt-4 text-xs font-bold uppercase tracking-[0.16em] text-gold">{offer.note}</p>
-              </article>
-            );
-          })}
+        <p className="eyebrow">From our menu</p>
+        <div className="mb-7 flex flex-wrap items-end justify-between gap-3"><h2 className="section-title mt-3">Something to share.</h2><p className="max-w-sm text-sm text-stone-400">Explore the specials already on the Restaurant Three menu.</p></div>
+        <div className="grid gap-px overflow-hidden rounded-xl border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
+          {offers.map((offer, index) => <article key={offer.title} className="flex flex-col bg-[#1b1815] p-5 lg:p-6">
+            <span className="text-xs tracking-[0.2em] text-gold">0{index + 1} / 0{offers.length}</span>
+            <h3 className="mt-5 font-display text-xl leading-tight text-cream">{offer.title}</h3>
+            <p className="mt-2 flex-1 text-sm leading-6 text-stone-400">{offer.description}</p>
+            <p className="mt-5 border-t border-white/10 pt-3 text-sm font-semibold text-gold">{offer.note}</p>
+          </article>)}
         </div>
       </div>
     </section>

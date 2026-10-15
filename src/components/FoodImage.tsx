@@ -9,8 +9,10 @@ type FoodImageProps = {
 };
 
 export default function FoodImage({ src, alt, className = "", eager = false }: FoodImageProps) {
-  const [loaded, setLoaded] = useState(false);
-  const [failed, setFailed] = useState(false);
+  const [loadedSrc, setLoadedSrc] = useState("");
+  const [failedSrc, setFailedSrc] = useState("");
+  const loaded = loadedSrc === src;
+  const failed = failedSrc === src;
 
   return (
     <div className={`relative overflow-hidden bg-stone-900 ${className}`}>
@@ -28,8 +30,9 @@ export default function FoodImage({ src, alt, className = "", eager = false }: F
           alt={alt}
           loading={eager ? "eager" : "lazy"}
           fetchPriority={eager ? "high" : undefined}
-          onLoad={() => setLoaded(true)}
-          onError={() => setFailed(true)}
+          decoding="async"
+          onLoad={() => setLoadedSrc(src)}
+          onError={() => setFailedSrc(src)}
           className={`h-full w-full object-cover transition duration-700 ${loaded ? "scale-100 opacity-100" : "scale-105 opacity-0"}`}
         />
       )}
