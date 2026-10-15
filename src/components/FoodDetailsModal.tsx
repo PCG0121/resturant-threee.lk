@@ -1,122 +1,46 @@
-import { Clock, Flame, Leaf, Phone, Send, X } from "lucide-react";
+import { useEffect, useRef } from "react";
+import { Clock, Flame, Leaf, MessageCircle, Phone, X } from "lucide-react";
 import { categories, formatPrice, type MenuItem } from "../data/menu";
 import { phoneLink, whatsappLink } from "../utils/links";
 import FoodImage from "./FoodImage";
 
-type FoodDetailsModalProps = {
-  item: MenuItem | null;
-  onClose: () => void;
-};
+type Props = { item: MenuItem | null; onClose: () => void };
 
-export default function FoodDetailsModal({ item, onClose }: FoodDetailsModalProps) {
-  if (!item) {
-    return null;
-  }
+export default function FoodDetailsModal({ item, onClose }: Props) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+  const closeRef = useRef<HTMLButtonElement>(null);
+  useEffect(() => {
+    if (!item) return;
+    const previousFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    closeRef.current?.focus();
+    const handleKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+      if (event.key !== "Tab" || !dialogRef.current) return;
+      const focusable = Array.from(dialogRef.current.querySelectorAll<HTMLElement>('button, a[href], [tabindex]:not([tabindex="-1"])'));
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => { document.body.style.overflow = previousOverflow; document.removeEventListener("keydown", handleKey); previousFocus?.focus(); };
+  }, [item, onClose]);
 
+  if (!item) return null;
   const category = categories.find((entry) => entry.id === item.category);
-  const spiceText = item.spicyLevel === 0 ? "Mild" : `${item.spicyLevel}/3`;
-  const priceText = item.variants?.length ? `From ${formatPrice(item.price)}` : formatPrice(item.price);
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/72 p-3 backdrop-blur-sm sm:items-center">
-      <div className="max-h-[92vh] w-full max-w-3xl overflow-y-auto rounded-[2rem] border border-white/10 bg-charcoal shadow-soft">
-        <div className="relative">
-          <FoodImage src={item.image} alt={item.name} className="h-72 rounded-t-[2rem] sm:h-96" />
-          <button
-            type="button"
-            onClick={onClose}
-            className="absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-full bg-black/70 text-white backdrop-blur transition hover:bg-white hover:text-stone-950"
-            aria-label="Close food details"
-          >
-            <X className="h-5 w-5" aria-hidden="true" />
-          </button>
-        </div>
-
-        <div className="space-y-6 p-5 sm:p-7">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
-            <div>
-              <p className="text-sm font-bold uppercase tracking-[0.18em] text-gold">{category?.name}</p>
-              <h2 className="mt-2 text-3xl font-black text-white">{item.name}</h2>
-              <p className="mt-3 max-w-2xl leading-7 text-stone-300">{item.fullDescription}</p>
-            </div>
-            <span className="shrink-0 text-2xl font-black text-white">{priceText}</span>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <div className="flex items-center gap-2 text-sm font-bold text-stone-300">
-                <Flame className="h-4 w-4 text-flame" aria-hidden="true" />
-                Spice level
-              </div>
-              <p className="mt-2 text-lg font-black text-white">{spiceText}</p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <div className="flex items-center gap-2 text-sm font-bold text-stone-300">
-                <Clock className="h-4 w-4 text-gold" aria-hidden="true" />
-                Preparation
-              </div>
-              <p className="mt-2 text-lg font-black text-white">{item.prepTime}</p>
-            </div>
-            <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-              <div className="flex items-center gap-2 text-sm font-bold text-stone-300">
-                <Leaf className="h-4 w-4 text-emerald-300" aria-hidden="true" />
-                Type
-              </div>
-              <p className="mt-2 text-lg font-black text-white">{item.vegetarian ? "Vegetarian" : "Non-veg"}</p>
-            </div>
-          </div>
-
-          {item.variants?.length ? (
-            <div>
-              <h3 className="text-sm font-black uppercase tracking-[0.18em] text-stone-400">Prices</h3>
-              <div className="mt-3 grid gap-2 sm:grid-cols-2">
-                {item.variants.map((variant) => (
-                  <div
-                    key={`${variant.name}-${variant.price}`}
-                    className="flex items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3"
-                  >
-                    <span className="text-sm font-bold text-stone-200">{variant.name}</span>
-                    <span className="font-black text-white">{formatPrice(variant.price)}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ) : null}
-
-          <div>
-            <h3 className="text-sm font-black uppercase tracking-[0.18em] text-stone-400">Details</h3>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {item.ingredients.map((ingredient) => (
-                <span
-                  key={ingredient}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-stone-200"
-                >
-                  {ingredient}
-                </span>
-              ))}
-            </div>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            <a
-              href={whatsappLink(`Hi Restaurant Three, I would like to ask about ${item.name}.`)}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center justify-center gap-2 rounded-2xl bg-emerald-500 px-5 py-4 font-black text-white transition hover:bg-emerald-400"
-            >
-              <Send className="h-5 w-5" aria-hidden="true" />
-              WhatsApp Enquiry
-            </a>
-            <a
-              href={phoneLink()}
-              className="inline-flex items-center justify-center gap-2 rounded-2xl border border-white/15 bg-white/[0.04] px-5 py-4 font-black text-white transition hover:bg-white hover:text-stone-950"
-            >
-              <Phone className="h-5 w-5" aria-hidden="true" />
-              Call Restaurant
-            </a>
-          </div>
-        </div>
+  return <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/80 sm:items-center sm:p-5" onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
+    <div ref={dialogRef} role="dialog" aria-modal="true" aria-labelledby="food-dialog-title" className="relative flex max-h-[94dvh] w-full max-w-xl flex-col overflow-hidden rounded-t-2xl border border-white/10 bg-charcoal shadow-soft sm:max-h-[88vh] sm:rounded-2xl">
+      <div className="relative shrink-0"><FoodImage src={item.image} alt={item.name} className="h-40 w-full sm:h-56" eager /><button ref={closeRef} type="button" onClick={onClose} aria-label="Close food details" className="absolute right-3 top-3 grid h-11 w-11 place-items-center rounded-full bg-coal/90 text-cream"><X className="h-5 w-5" aria-hidden="true" /></button></div>
+      <div className="overflow-y-auto overscroll-contain px-5 pb-6 pt-5 sm:px-7 sm:pb-7"><p className="eyebrow">{category?.name}</p><div className="mt-1 flex items-start justify-between gap-3"><h2 id="food-dialog-title" className="font-display text-3xl leading-tight text-cream">{item.name}</h2><span className="shrink-0 text-base font-bold text-gold">{formatPrice(item.variants?.[0]?.price ?? item.price)}</span></div>
+        {!item.available && <p className="mt-3 text-sm font-bold text-orange-300">Currently sold out</p>}
+        <p className="mt-3 text-sm leading-6 text-stone-300">{item.fullDescription}</p>
+        <div className="mt-4 flex flex-wrap gap-x-5 gap-y-2 border-y border-white/10 py-3 text-xs text-stone-300"><span className="flex items-center gap-1.5"><Flame className="h-4 w-4 text-ember" aria-hidden="true" /> {item.spicyLevel === 0 ? "Mild" : `Spice ${item.spicyLevel}/3`}</span><span className="flex items-center gap-1.5"><Clock className="h-4 w-4 text-gold" aria-hidden="true" /> {item.prepTime}</span><span className="flex items-center gap-1.5"><Leaf className="h-4 w-4 text-emerald-300" aria-hidden="true" /> {item.vegetarian ? "Vegetarian" : "Non-veg"}</span></div>
+        {item.variants?.length ? <section className="mt-5"><h3 className="text-xs font-bold uppercase tracking-widest text-gold">Sizes & prices</h3><div className="mt-2 divide-y divide-white/10 rounded-lg border border-white/10">{item.variants.map((variant) => <div key={`${variant.name}-${variant.price}`} className="flex justify-between gap-4 px-4 py-3 text-sm"><span className="text-stone-300">{variant.name}</span><span className="font-bold text-cream">{formatPrice(variant.price)}</span></div>)}</div></section> : null}
+        {item.ingredients.length > 0 && <section className="mt-5"><h3 className="text-xs font-bold uppercase tracking-widest text-gold">Details</h3><p className="mt-2 text-sm leading-6 text-stone-300">{item.ingredients.join(" · ")}</p></section>}
+        <div className="mt-6 flex gap-2"><a href={whatsappLink(`Hi Restaurant Three, I would like to ask about ${item.name}.`)} target="_blank" rel="noreferrer" className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-ember px-3 text-sm font-bold text-white"><MessageCircle className="h-4 w-4" aria-hidden="true" /> WhatsApp</a><a href={phoneLink()} className="flex min-h-12 flex-1 items-center justify-center gap-2 rounded-lg border border-white/20 px-3 text-sm font-bold text-cream"><Phone className="h-4 w-4" aria-hidden="true" /> Call us</a></div>
       </div>
     </div>
-  );
+  </div>;
 }

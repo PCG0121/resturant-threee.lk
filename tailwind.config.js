@@ -4,11 +4,12 @@ export default {
   theme: {
     extend: {
       colors: {
-        coal: "#0c0a09",
-        charcoal: "#161311",
-        ember: "#f97316",
+        coal: "#14110f",
+        charcoal: "#211c18",
+        cream: "#f6f0e7",
+        ember: "#c35c2c",
         flame: "#dc2626",
-        gold: "#f5c15d",
+        gold: "#d8b780",
       },
       boxShadow: {
         glow: "0 0 36px rgba(249, 115, 22, 0.22)",

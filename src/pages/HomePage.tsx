@@ -1,4 +1,5 @@
-import { ArrowRight, ArrowUpRight, MapPin, Sparkles } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, ArrowUpRight, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import ContactSection from "../components/ContactSection";
 import FoodCard from "../components/FoodCard";
@@ -8,7 +9,6 @@ import Header from "../components/Header";
 import OffersSection from "../components/OffersSection";
 import Seo from "../components/Seo";
 import { categories, menuItems, type MenuItem } from "../data/menu";
-import { useState } from "react";
 
 const highlights = ["fried-rice", "kottu", "seafood", "beverages"] as const;
 
@@ -16,89 +16,39 @@ export default function HomePage() {
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const featuredItems = menuItems.filter((item) => item.featured).slice(0, 3);
 
-  return (
-    <>
-      <Seo
-        title="Restaurant Three - Kurunegala | Fried Rice, Kottu & Seafood"
-        description="Explore Restaurant Three - Kurunegala's QR menu with specials, fried rice, kottu, noodles, seafood, desserts, juices and contact details."
-      />
-      <Header />
-      <main>
-        <section className="hero-section relative overflow-hidden border-b border-white/10 px-4 pb-16 pt-12 sm:px-6 lg:px-8 lg:pb-28 lg:pt-20">
-          <div className="pointer-events-none absolute -right-36 -top-44 h-[36rem] w-[36rem] rounded-full bg-ember/10 blur-[110px]" />
-          <div className="relative mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
-            <div className="animate-fade-up">
-              <p className="eyebrow"><span className="h-2 w-2 rounded-full bg-ember" /> Kurunegala · Sri Lanka</p>
-              <h1 className="display-title mt-8 max-w-3xl text-[clamp(3.6rem,7vw,7.5rem)] leading-[0.98] text-white">
-                Come hungry.<br /><em className="text-gold">Leave happy.</em>
-              </h1>
-              <p className="mt-7 max-w-lg text-lg leading-8 text-stone-300 sm:text-xl">
-                Wok-fired favourites, comforting kottu and something fresh to sip. Pull up a chair and find your next favourite at Three.
-              </p>
-              <div className="mt-9 flex flex-wrap gap-3">
-                <Link to="/menu" className="btn-primary">Explore the menu <ArrowUpRight className="h-5 w-5" aria-hidden="true" /></Link>
-                <Link to="/qr" className="btn-outline">Get the QR code <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
-              </div>
-              <div className="mt-12 flex flex-wrap gap-x-8 gap-y-4 border-t border-white/10 pt-6 text-sm text-stone-400">
-                <span className="flex items-center gap-2"><MapPin className="h-4 w-4 text-gold" aria-hidden="true" /> Find us in Kurunegala</span>
-                <span className="flex items-center gap-2"><Sparkles className="h-4 w-4 text-gold" aria-hidden="true" /> Freshly made, best shared</span>
-              </div>
-            </div>
+  return <>
+    <Seo title="Restaurant Three - Kurunegala | Fried Rice, Kottu & Seafood" description="Explore Restaurant Three - Kurunegala's QR menu with specials, fried rice, kottu, noodles, seafood, desserts, juices and contact details." />
+    <Header />
+    <main>
+      <section className="hero-section overflow-hidden border-b border-white/10">
+        <div className="section-wrap grid items-center gap-8 py-10 sm:py-16 lg:min-h-[660px] lg:grid-cols-[1fr_1.02fr] lg:gap-14 lg:py-16">
+          <div className="animate-fade-up lg:py-8">
+            <p className="eyebrow"><span className="h-1.5 w-1.5 rounded-full bg-ember" /> Restaurant Three · Kurunegala</p>
+            <h1 className="display-title mt-5 max-w-[720px] text-[clamp(3.25rem,8vw,7rem)] leading-[0.98] text-cream sm:mt-7">Good food.<br /><em className="text-gold">Good company.</em></h1>
+            <p className="mt-6 max-w-md text-base leading-7 text-stone-300 sm:text-lg sm:leading-8">From wok-fired favourites to comforting kottu, there’s always something worth gathering around.</p>
+            <div className="mt-7 flex flex-wrap gap-3 sm:mt-9"><Link to="/menu" className="btn-primary">Explore the menu <ArrowUpRight className="h-5 w-5" aria-hidden="true" /></Link><Link to="/qr" className="btn-outline">Print a QR menu <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link></div>
+            <div className="mt-8 flex items-center gap-2 border-t border-white/10 pt-5 text-sm text-stone-400 sm:mt-12"><MapPin className="h-4 w-4 text-gold" aria-hidden="true" /> Find us in Kurunegala, Sri Lanka</div>
+          </div>
+          <div className="hero-visual relative min-w-0 pb-5 pl-4 sm:pb-6 sm:pl-6">
+            <div className="absolute bottom-0 left-0 top-5 w-[92%] rounded-[1.25rem] border border-gold/40" aria-hidden="true" />
+            <FoodImage src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?auto=format&fit=crop&w=1200&q=82" alt="Freshly prepared meal" className="relative aspect-[4/3] rounded-xl sm:aspect-[5/4] lg:aspect-[4/5]" eager />
+            <div className="absolute bottom-0 left-0 border border-white/15 bg-coal px-5 py-4 shadow-soft sm:px-7 sm:py-5"><span className="eyebrow">At Restaurant Three</span><p className="mt-1 font-display text-xl text-cream sm:text-2xl">A table for every craving.</p></div>
+          </div>
+        </div>
+      </section>
 
-            <div className="hero-visual relative mx-auto w-full max-w-[640px] pb-7 pl-5 sm:pl-10 lg:pb-10">
-              <div className="absolute bottom-0 left-0 top-10 w-[88%] rounded-[2rem] border border-gold/40" aria-hidden="true" />
-              <FoodImage
-                src="https://images.unsplash.com/photo-1543352634-a1c51d9f1fa7?auto=format&fit=crop&w=1200&q=82"
-                alt="A freshly prepared restaurant meal"
-                className="relative aspect-[4/4.5] rounded-[1.75rem] sm:aspect-[5/4] lg:aspect-[4/5]"
-                eager
-              />
-              <div className="absolute bottom-0 left-0 max-w-[235px] rounded-2xl border border-white/15 bg-charcoal/95 p-5 shadow-soft backdrop-blur-xl sm:left-3 sm:max-w-[260px]">
-                <Sparkles className="mb-3 h-5 w-5 text-gold" aria-hidden="true" />
-                <p className="font-display text-2xl text-white">Good things, together.</p>
-                <p className="mt-1 text-sm leading-5 text-stone-400">Your table is waiting at Three.</p>
-              </div>
-            </div>
-          </div>
-        </section>
+      <section className="section-wrap py-14 lg:py-24">
+        <div className="mb-7 flex flex-wrap items-end justify-between gap-4"><div><p className="eyebrow">Discover your next favourite</p><h2 className="section-title mt-3">Explore by craving.</h2></div><Link to="/menu" className="text-link">Full menu <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link></div>
+        <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">{highlights.map((id, index) => {
+          const category = categories.find((entry) => entry.id === id)!;
+          const image = menuItems.find((item) => item.category === id)!.image;
+          return <Link key={id} to={`/menu?category=${id}`} className="group relative overflow-hidden rounded-xl border border-white/10 bg-charcoal"><FoodImage src={image} alt="" className="aspect-[3/4] w-full sm:aspect-[4/5]" /><div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/10 to-transparent" /><span className="absolute left-3 top-3 text-xs tracking-[0.2em] text-cream sm:left-5 sm:top-5">0{index + 1}</span><div className="absolute bottom-3 left-3 right-3 sm:bottom-5 sm:left-5 sm:right-5"><h3 className="font-display text-xl leading-tight text-cream sm:text-2xl">{category.name}</h3><span className="mt-1 inline-flex items-center gap-1 text-xs font-semibold text-gold">Explore <ArrowUpRight className="h-3 w-3" aria-hidden="true" /></span></div></Link>;
+        })}</div>
+      </section>
 
-        <section className="section-wrap py-16 lg:py-24">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
-            <div><p className="eyebrow">Find your flavour</p><h2 className="section-title mt-4">Something for everyone.</h2></div>
-            <Link to="/menu" className="text-link">View the full menu <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
-          </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {highlights.map((id, index) => {
-              const category = categories.find((entry) => entry.id === id)!;
-              const image = menuItems.find((item) => item.category === id)!.image;
-              return (
-                <Link key={id} to={`/menu?category=${id}`} className="group relative block overflow-hidden rounded-2xl border border-white/10 bg-charcoal focus-visible:outline focus-visible:outline-2 focus-visible:outline-gold">
-                  <FoodImage src={image} alt={category.name} className="aspect-[4/3] sm:aspect-[3/4]" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/10 to-transparent" />
-                  <span className="absolute left-5 top-5 text-xs font-bold tracking-[0.2em] text-white/70">0{index + 1}</span>
-                  <div className="absolute bottom-5 left-5 right-5 flex items-end justify-between gap-2">
-                    <div><h3 className="font-display text-2xl text-white">{category.name}</h3><p className="mt-1 text-sm text-stone-300">{category.description}</p></div>
-                    <ArrowUpRight className="h-5 w-5 shrink-0 text-gold transition group-hover:-translate-y-1 group-hover:translate-x-1" aria-hidden="true" />
-                  </div>
-                </Link>
-              );
-            })}
-          </div>
-        </section>
-
-        <section className="section-wrap pb-16 lg:pb-24">
-          <div className="mb-8 flex flex-wrap items-end justify-between gap-5">
-            <div><p className="eyebrow">A taste of Three</p><h2 className="section-title mt-4">Worth coming back for.</h2></div>
-            <Link to="/menu" className="text-link">Explore all dishes <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link>
-          </div>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {featuredItems.map((item) => <FoodCard key={item.id} item={item} onSelect={setSelectedItem} />)}
-          </div>
-        </section>
-        <OffersSection />
-        <ContactSection />
-      </main>
-      <FoodDetailsModal item={selectedItem} onClose={() => setSelectedItem(null)} />
-    </>
-  );
+      <section className="section-wrap pb-14 lg:pb-24"><div className="mb-7 flex flex-wrap items-end justify-between gap-4"><div><p className="eyebrow">A taste of Three</p><h2 className="section-title mt-3">The favourites.</h2></div><Link to="/menu" className="text-link">See every dish <ArrowUpRight className="h-4 w-4" aria-hidden="true" /></Link></div><div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{featuredItems.map((item) => <FoodCard key={item.id} item={item} onSelect={setSelectedItem} />)}</div></section>
+      <OffersSection /><ContactSection />
+    </main>
+    <FoodDetailsModal item={selectedItem} onClose={() => setSelectedItem(null)} />
+  </>;
 }
